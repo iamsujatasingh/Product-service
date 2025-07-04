@@ -1,95 +1,81 @@
 # 🛍️ Product-Service
 
-A Spring Boot microservice for managing product data using RESTful APIs. This service provides full CRUD operations with DTO abstraction, input validation, exception handling, and clean architecture.
+A secure Spring Boot microservice for product management. Supports JWT authentication and uses PostgreSQL for persistence.
 
 ---
 
-## 📌 Features
+## Features
 
-- Create, Read, Update, and Delete products
-- DTO-based request/response handling
-- Input validation using Spring’s `@Valid`
-- Global exception handling
-- Modular structure for easy extension
+- JWT-based authentication and authorization
+- CRUD APIs for product management
+- Input validation and global exception handling
+- PostgreSQL as the database
+- Clean layered architecture with DTOs
 
 ---
 
-## 🧰 Tech Stack
+## Tech Stack
 
 - Java 17
 - Spring Boot
-- Spring Web
+- Spring Security (JWT)
+- PostgreSQL
 - Spring Data JPA
-- H2 / PostgreSQL (configurable)
 - Gradle
-- JUnit & Mockito (for tests)
 
 ---
 
-## 🗂️ Project Structure
+## Getting Started
 
-src
-├── controller # REST Controllers
-├── dto # Request and Response DTOs
-├── entity # JPA Entity
-├── exception # Custom Exceptions and Global Handler
-├── repository # Spring Data Repository
-├── service # Business Logic
-└── ProductServiceApplication.java
+### Prerequisites
 
+- Java 17+
+- PostgreSQL running locally or remotely
+- Gradle installed
 
----
+### Configuration
 
-## 🚀 Getting Started
+Update `src/main/resources/application.yml` with your PostgreSQL credentials:
 
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/iamsujatasingh/Product-service.git
-cd Product-service
-2. Build & Run
-./gradlew build
+```yaml
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/productdb
+    username: yourusername
+    password: yourpassword
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+Run the Application
 ./gradlew bootRun
-3. Access the API
-Base URL: http://localhost:8080/products
+API Endpoints
 
-🧪 Sample API Endpoints
+Method	Endpoint	Description	Auth Required
+POST	/api/auth/login	Login and get JWT token	No
+POST	/api/products	Create new product	Yes
+GET	/api/products	Get all products	Yes
+GET	/api/products/{id}	Get product by ID	Yes
+PUT	/api/products/{id}	Update product	Yes
+DELETE	/api/products/{id}	Delete product	Yes
+Authentication
 
-Method	Endpoint	Description
-POST	/products	Create new product
-GET	/products	Get all products
-GET	/products/{id}	Get product by ID
-PUT	/products/{id}	Update product
-DELETE	/products/{id}	Delete product
-✅ Sample Request Body (POST / PUT)
-{
-  "name": "Shampoo",
-  "description": "Gentle cleansing shampoo",
-  "price": 12.99
-}
-⚠️ Error Handling
+Login endpoint returns JWT token
+Pass JWT token in Authorization: Bearer <token> header for all secured endpoints
+Testing
 
-All errors return JSON responses with appropriate HTTP status codes:
+Unit and integration tests coming soon.
+Future Improvements
 
-400 Bad Request – validation errors
-404 Not Found – product not found
-500 Internal Server Error – unhandled exceptions
-🧪 Testing
+Add user registration & roles
+Add Swagger/OpenAPI docs
+Add Docker support for app and PostgreSQL
+Add token refresh mechanism
+License
 
-To run tests:
+MIT License
 
-./gradlew test
-Tests (to be added):
 
-Unit tests for service logic
-Controller tests using MockMvc
-🔮 Future Enhancements
-
-Swagger/OpenAPI documentation
-JWT-based authentication
-Docker + Docker Compose support
-MapStruct for DTO mapping
-Pagination and sorting on list endpoint
 👤 Author
 
 Sujata Singh
